@@ -3,19 +3,25 @@ import { ParsedUrlQuery } from "querystring"
 
 interface SlugPageProps {
   slug?: string
+  encodedSlug?: string
 }
 const ArticleBySlug: NextPage<SlugPageProps> = ({
   slug,
+  encodedSlug,
 }) => {
   return (
-    <div>slug: {slug}</div>
+    <>
+      <div>slug: {slug}</div>
+      <div>encodedSlug: {encodedSlug}</div>
+    </>
   );
 }
 
 export default ArticleBySlug
 
 interface Props {
-  slug?: string,   
+  slug?: string,  
+  encodedSlug?: string, 
 }
 
 interface Params extends ParsedUrlQuery {
@@ -29,7 +35,8 @@ export const getServerSidePropsBySlug: GetServerSideProps<
   const slug = params?.slug!;
   return {
     props: {
-      slug, 
+      slug,
+      encodedSlug: encodeURIComponent(slug)
     }
   }
 }
